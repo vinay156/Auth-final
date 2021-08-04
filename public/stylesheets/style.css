@@ -1,0 +1,16 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #00b7ff;
+}
+
+a {
+  color: black;
+}
+
+.message-wrapper {
+  margin: 0 0 24px;
+  background-color: blanchedalmond;
+  padding: 5px;
+  text-align: center;
+}

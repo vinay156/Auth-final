@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <%- include('./nav')%>
+        <div class="auth">
+            <h1>
+                <%= authType %>
+            </h1>
+            <form action="" method="POST">
+                <div class="form-pair">
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" />
+                </div>
+                <div class="form-pair">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" />
+                </div>
+                <button>Log In</button>
+            </form>
+        </div>
+</body>
+
+</html>
