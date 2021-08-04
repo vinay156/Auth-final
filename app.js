@@ -1,27 +1,28 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-const session = require("express-session");
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const mongoose = require('mongoose')
-const bcrypt = require('bcryptjs')
-const dotenv = require('dotenv');
-dotenv.config();
-
+//Model
+const User = require('./models/user')
 
 //Mongoose connect
+const dotenv = require('dotenv');
+dotenv.config();
+const mongoose = require('mongoose')
 mongoose.connect(process.env.DB_URL, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 
-//Model
-const User = require('./models/user')
+
+const bcrypt = require('bcryptjs')
+const cookieParser = require('cookie-parser');
+const express = require('express');
+const session = require("express-session");
+const createError = require('http-errors');
+const logger = require('morgan');
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const path = require('path');
+
 
 //EJS
-var app = express();
+const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -68,7 +69,7 @@ app.use(express.urlencoded({extended: false}))
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Route
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
 
 

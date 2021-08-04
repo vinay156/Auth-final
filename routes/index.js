@@ -17,11 +17,11 @@ function checkNotAuth(req, res, next)
 }
 
 router.get('/', (req, res) =>{
-    Message.find().exec((err, list_msg)=>{
+    Message.find().exec((err, msgList)=>{
         if(err) {return next(err)}
         res.render("index", {
             user: req.user,
-            msg_list: list_msg
+            msgList: msgList
         })
     })
 });
