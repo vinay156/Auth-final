@@ -2,19 +2,16 @@
 <html>
 
 <head>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
 
 <body>
   <%- include('./nav')%>
     <div class="wrapper">
       <% if (user){ %>
-        <div class="welcome-back">
-          Hey <%= user.username %>! 👋
-        </div>
+        <div class="welcome-back">Hey <%= user.username %>! 👋</div>
         <% } %>
-          <% msgList.forEach(msg=> { %>
-            <%- include('./message', {msg: msg}) %>
+          <% msgList.forEach(msg=> { %> <%- include('./message', {msg: msg}) %>
               <% }) %>
     </div>
 </body>
