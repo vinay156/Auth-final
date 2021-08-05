@@ -3,10 +3,21 @@ const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const passport = require("passport");
 
-//Model
 const User = require("../models/user");
+const Message = require("../models/message");
 
-// Handle sign up page GET
+exports.home = (req, res) => {
+  Message.find().exec((err, msgList) => {
+    if (err) {
+      return next(err);
+    }
+    res.render("index", {
+      user: req.user,
+      msgList: msgList,
+    });
+  });
+};
+
 exports.signUp = (req, res, next) => {
   res.render("signup", {
     user: req.user,
@@ -14,7 +25,6 @@ exports.signUp = (req, res, next) => {
   });
 };
 
-//Handle sign up POST
 exports.signUpPost = (req, res, next) => {
   bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
     if (err) {
@@ -22,7 +32,7 @@ exports.signUpPost = (req, res, next) => {
     }
 
     const user = new User({
-      username: req.body.username,
+      userName: req.body.userName,
       password: hashedPassword,
       status: "member",
     }).save((err) => {
@@ -34,7 +44,6 @@ exports.signUpPost = (req, res, next) => {
   });
 };
 
-//Handle log in page GET
 exports.logIn = (req, res, next) => {
   res.render("login", {
     user: req.user,
@@ -42,7 +51,6 @@ exports.logIn = (req, res, next) => {
   });
 };
 
-//Handle log in page POST
 exports.logInPost = (req, res, next) => {
   passport.authenticate("local", {
     successRedirect: "/",
@@ -51,7 +59,6 @@ exports.logInPost = (req, res, next) => {
   })(req, res, next);
 };
 
-//Handle log OUT page GET
 exports.logOut = (req, res, next) => {
   req.logout();
   res.redirect("/");

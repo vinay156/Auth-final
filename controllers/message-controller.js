@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const passport = require("passport");
 
-//Model
 const Message = require("../models/message");
 const User = require("../models/user");
 
@@ -41,7 +40,7 @@ exports.createMessagePost = (req, res, next) => {
   const msg = new Message({
     title: req.body.title,
     body: req.body.note,
-    username: req.user.username,
+    userName: req.user.userName,
     timestamp: formatDate(timestamp),
   }).save((err) => {
     if (err) {

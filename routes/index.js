@@ -1,11 +1,6 @@
 var express = require("express");
 var router = express.Router();
 
-//Model
-const User = require("../models/user");
-const Message = require("../models/message");
-
-//Controller
 const authController = require("../controllers/auth-controller");
 const messageController = require("../controllers/message-controller");
 
@@ -16,17 +11,7 @@ function checkNotAuth(req, res, next) {
   return next();
 }
 
-router.get("/", (req, res) => {
-  Message.find().exec((err, msgList) => {
-    if (err) {
-      return next(err);
-    }
-    res.render("index", {
-      user: req.user,
-      msgList: msgList,
-    });
-  });
-});
+router.get("/", authController.home);
 
 router.get("/sign-up", checkNotAuth, authController.signUp);
 

@@ -1,20 +1,18 @@
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
+const createError = require("http-errors");
 const dotenv = require("dotenv");
 const express = require("express");
-const session = require("express-session");
-const createError = require("http-errors");
-const mongoose = require("mongoose");
-const logger = require("morgan");
-const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const logger = require("morgan");
+const mongoose = require("mongoose");
+const passport = require("passport");
 const path = require("path");
+const session = require("express-session");
 dotenv.config();
 
-//Model
 const User = require("./models/user");
 
-//Mongoose connect
 mongoose.connect(process.env.DB_URL, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
@@ -23,15 +21,13 @@ mongoose.connect(process.env.DB_URL, {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 
-//EJS
 const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-//Passport
 passport.use(
-  new LocalStrategy((username, password, done) => {
-    User.findOne({ username: username }, (err, user) => {
+  new LocalStrategy((userName, password, done) => {
+    User.findOne({ userName: userName }, (err, user) => {
       if (err) {
         return done(err);
       }
@@ -70,22 +66,16 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-//Route
 const indexRouter = require("./routes/index");
 app.use("/", indexRouter);
 
-// catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
   res.render("error");
 });
