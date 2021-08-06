@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body>
+  <%- include('./nav')%>
+    <div class="wrapper">
+      <% if (user){ %>
+        <div class="welcome-back">Hey <%= user.userName %>! 👋</div>
+        <% } %>
+          <% msgList.forEach(msg=> { %> <%- include('./message', {msg: msg}) %>
+              <% }) %>
+    </div>
+</body>
+
+</html>
