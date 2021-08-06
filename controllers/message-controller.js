@@ -1,12 +1,10 @@
 const async = require("async");
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
-const passport = require("passport");
 
 const Message = require("../models/message");
-const User = require("../models/user");
 
-exports.createMessage = (req, res) => {
+exports.getMessage = (req, res) => {
   if (req.user) {
     res.render("create-message", { user: req.user });
   } else {
@@ -14,7 +12,7 @@ exports.createMessage = (req, res) => {
   }
 };
 
-exports.createMessagePost = (req, res, next) => {
+exports.postMessage = (req, res, next) => {
   const timestamp = new Date();
   function formatDate(timestamp) {
     let date = new Date(timestamp);
