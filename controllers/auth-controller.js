@@ -1,4 +1,3 @@
-const async = require("async");
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const passport = require("passport");

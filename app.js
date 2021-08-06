@@ -10,10 +10,9 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const path = require("path");
 const session = require("express-session");
-dotenv.config();
-
 const User = require("./models/user");
 const indexRouter = require("./routes/index");
+dotenv.config();
 
 mongoose.connect(process.env.DB_URL, {
   useUnifiedTopology: true,
